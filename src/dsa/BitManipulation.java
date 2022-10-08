@@ -53,7 +53,20 @@ public class BitManipulation {
 			aXORb=aXORb&(aXORb-1);
 			count+=1;
 		}
-		System.out.println(count+" many bits need to be changed to convert "+a+" -> "+b);
+		System.out.println(count+" bits need to be changed to convert "+a+" -> "+b);
+		
+		//divide a number by 2
+		a=a>>2;
+		//multiply a number by 2
+		b=b<<2;
+		
+		int c = 5;
+		int d = 5;
+		c = c^c; // n^n = 0 
+		d = d^0; // n^0 = n 
+		System.out.println(c);
+		System.out.println(d);
+		
 	
 	}
 
