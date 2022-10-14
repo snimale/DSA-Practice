@@ -45,9 +45,9 @@ class LinkedList {
 		if (index<0 || index>size) {
 			System.out.println("Invaild Index");
 		} else if (index==0) {
-			addAtFront(data);
+			this.addAtFront(data);
 		} else if (index==size) {
-			addAtEnd(data);
+			this.addAtEnd(data);
 		} else {
 			Node newNode = new Node(data);
 			Node currNode = head; //0 index start
@@ -87,6 +87,7 @@ class LinkedList {
 			if (head.next==null) {
 				head=null;
 				tail=null;
+				size--;
 			} else {
 				Node currNode = head;
 				while(currNode.next.next!=null) {
@@ -94,7 +95,38 @@ class LinkedList {
 				}
 				currNode.next=null;
 				tail=currNode;
+				size--;
 			}
+		}
+	}
+	
+	public void remove(int index) {
+		if(index<0 || index>=size) {
+			System.out.println("Invalid index");
+		} else if (index==0) {
+			this.removeFromFront();
+		} else if (index==size-1) {
+			this.removeFromLast();
+		} else {
+			Node currNode = head;
+			for(int i=1; i<index; i++) {
+				currNode=currNode.next;
+			}
+			currNode.next=currNode.next.next;
+			size--;
+		}
+	}
+	
+	//change data
+	public void set(int index, int data) {
+		if(index<0 || index>=size) {
+			System.out.println("Invalid index");
+		} else {
+			Node currNode = head;
+			for(int i=0; i<index; i++) {
+				currNode=currNode.next;
+			}
+			currNode.data=data;
 		}
 	}
 	
@@ -105,6 +137,19 @@ class LinkedList {
 	
 	public Node getTail() {
 		return tail;
+	}
+	
+	public int get(int index) {
+		if(index<0 || index>=size) {
+			System.out.println("Invalid index");
+			return -1;
+		} else {
+			Node currNode = head;
+			for(int i=0; i<index; i++) {
+				currNode=currNode.next;
+			}
+			return currNode.data;
+		}
 	}
 	
 	public int size() {
@@ -135,12 +180,6 @@ class LinkedList {
 
 public class LinkedListDSA {
 	public static void main(String args[]) {
-		LinkedList list = new LinkedList();
-		list.addAtFront(1);
-		list.addAtFront(2);
-		list.addAtEnd(4);
-		list.add(2, 3);
-		
-		//add remove at index i at next commit
+
 	}
 }
