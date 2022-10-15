@@ -117,7 +117,7 @@ class LinkedList {
 		}
 	}
 	//reverse linked list
-	public static LinkedList reverseLinkedList(LinkedList list) {
+	public static LinkedList reverseLinkedListLoop(LinkedList list) {
 		if (list.size==1 || list.size==0) {
 			return list;
 		} else {
@@ -134,6 +134,7 @@ class LinkedList {
 			return list;
 		}
 	}
+	
 	
 	//change data
 	public void set(int index, int data) {
