@@ -199,13 +199,6 @@ class LinkedList {
 
 public class LinkedListDSA {
 	public static void main(String args[]) {
-		LinkedList list = new LinkedList();
-		list.addAtFront(1);
-		list.addAtFront(2);
-		list.addAtFront(3);
-		list.addAtFront(4);
-		list.addAtFront(5);
-		LinkedList.reverseLinkedList(list);
-		System.out.println(list);
+
 	}
 }
