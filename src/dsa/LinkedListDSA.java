@@ -116,6 +116,24 @@ class LinkedList {
 			size--;
 		}
 	}
+	//reverse linked list
+	public static LinkedList reverseLinkedList(LinkedList list) {
+		if (list.size==1 || list.size==0) {
+			return list;
+		} else {
+			Node pn = null;
+			Node cn = list.head;
+			Node nn = null;
+			while(cn!=null) {
+				nn = cn.next;
+				cn.next = pn;
+				pn =cn;
+				cn = nn;
+			}
+			list.head = pn;
+			return list;
+		}
+	}
 	
 	//change data
 	public void set(int index, int data) {
@@ -180,6 +198,13 @@ class LinkedList {
 
 public class LinkedListDSA {
 	public static void main(String args[]) {
-
+		LinkedList list = new LinkedList();
+		list.addAtFront(1);
+		list.addAtFront(2);
+		list.addAtFront(3);
+		list.addAtFront(4);
+		list.addAtFront(5);
+		LinkedList.reverseLinkedList(list);
+		System.out.println(list);
 	}
 }
