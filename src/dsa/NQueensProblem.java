@@ -34,7 +34,7 @@ class Board {
 public class NQueensProblem {
 	public static void main(String args[]) {
 		Board b1 = new Board();
-		b1.createBoard(10);
+		b1.createBoard(31);
 		solution(b1, 0);
 	}
 	
