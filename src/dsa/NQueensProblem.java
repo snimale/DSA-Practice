@@ -32,9 +32,10 @@ class Board {
 }
 
 public class NQueensProblem {
+	//TIME COMPLEXITY -> N!
 	public static void main(String args[]) {
 		Board b1 = new Board();
-		b1.createBoard(31);
+		b1.createBoard(30);
 		solution(b1, 0);
 	}
 	

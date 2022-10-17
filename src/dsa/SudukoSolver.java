@@ -34,6 +34,7 @@ class Suduko {
 	
 }
 public class SudukoSolver {
+	// TIME COMPLEXITY -> N^M WHERE N=POSSIBLE SOLUYIONS FROM 1 TO 9, M=NUMBER OF BLANK SPACES IN BOARD
 	public static void main(String args[]) {
 		Suduko s = new Suduko();
 		s.createBoard();
@@ -69,7 +70,56 @@ public class SudukoSolver {
 		s.set(8, 3, 2);
 		s.set(8, 5, 6);
 		s.set(8, 6, 3);
-		solution(s);
+		solution(s, 0, 0);
 		System.out.print(s);
+	}
+	public static boolean isSafe(Suduko s, int num, int row, int col) {
+		for(int i=0; i<9; i++) {
+			if(s.board[row][i]==num) {
+				return false;
+			}
+		}
+		for(int i=0; i<9; i++) {
+			if(s.board[i][col]==num) {
+				return false;
+			}
+		}
+		row=(row/3)*3;
+		col=(col/3)*3;
+		for(int i=0; i<3; i++) {
+			for(int j=0; j<3; j++) {
+				if(s.board[row+i][col+j]==num) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	public static boolean solution(Suduko s, int row, int col) {
+		if(col>=9) {
+			row++;
+			col=0;
+		}
+		if(row>=9) {
+			return true;
+		}
+		
+		if(s.board[row][col]!=0) {
+			return solution(s, row, col+1);
+		} else {
+			for(int i=1; i<10; i++) {
+				if(isSafe(s, i, row, col)) {
+					s.board[row][col]=i;
+					if(solution(s, row, col+1)) {
+						return true;
+					}
+					s.board[row][col]=0;
+					
+				}
+			}
+		}
+		return false;
+		
+		
 	}
 }
