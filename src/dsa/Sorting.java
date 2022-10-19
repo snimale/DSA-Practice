@@ -3,7 +3,7 @@ package dsa;
 public class Sorting {
 	public static void main(String Args[]) {
 		int[] arr = {1, 2, 3, 5, 7, 2, 4, 5, 7};
-		bubbleSort(arr);
+		insertionSort(arr);
 		for (int e : arr) {
 			System.out.print(e +", ");
 		}
@@ -20,6 +20,21 @@ public class Sorting {
 					swap(arr, j);
 				}
 			}
+		}
+	}
+	
+	public static void insertionSort(int[] arr) {
+		if (arr.length<2) {
+			return;
+		}
+		for(int i=1; i<arr.length; i++) {
+			int temp = arr[i];
+			int j = i-1;
+			while(j>=0 && arr[j]>temp) {
+				arr[j+1]=arr[j];
+				j--;
+			}
+			arr[j+1]=temp;
 		}
 	}
 }
