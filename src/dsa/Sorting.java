@@ -3,21 +3,21 @@ package dsa;
 public class Sorting {
 	public static void main(String Args[]) {
 		int[] arr = {1, 2, 3, 5, 7, 2, 4, 5, 7};
-		insertionSort(arr);
+		selectionSort(arr);
 		for (int e : arr) {
 			System.out.print(e +", ");
 		}
 	}
-	public static void swap(int[] arr, int j) {
-		arr[j]=arr[j]^arr[j+1];
-		arr[j+1]=arr[j]^arr[j+1];
-		arr[j]=arr[j]^arr[j+1];
+	public static void swap(int[] arr, int a, int b) {
+		arr[a]=arr[a]^arr[b];
+		arr[b]=arr[a]^arr[b];
+		arr[a]=arr[a]^arr[b];
 	}
 	public static void bubbleSort(int[] arr) {
 		for (int i=0; i<arr.length-1; i++) {
 			for (int j=0; j<arr.length-1-i; j++) {
 				if(arr[j]>arr[j+1]) {
-					swap(arr, j);
+					swap(arr, j, j+1);
 				}
 			}
 		}
@@ -35,6 +35,20 @@ public class Sorting {
 				j--;
 			}
 			arr[j+1]=temp;
+		}
+	}
+	
+	public static void selectionSort(int[] arr) {
+		for(int i=0; i<arr.length-1; i++) {
+			int min = i;
+			for(int j=i+1; j<arr.length; j++) {
+				if (arr[j]<arr[min]) {
+					min=j;
+				}
+			}
+			if(min!=i) {
+				swap(arr, min, i);
+			}
 		}
 	}
 }
