@@ -1,7 +1,7 @@
 package easyQ;
 
 
-public class stockBuyAndSell1 {
+public class StockBuyAndSell1 {
 	public static void main(String args[]) {
 		int[] stockprices1 = {2,5,3,7,1,4,5,3,8};
 		int[] ans = maxProfit(stockprices1);
