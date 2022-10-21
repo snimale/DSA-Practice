@@ -3,7 +3,7 @@ package dsa;
 public class Sorting {
 	public static void main(String Args[]) {
 		int[] arr = {1, 2, 3, 5, 7, 2, 4, 5, 7};
-		selectionSort(arr);
+		mergeSort(arr, 0, arr.length-1);
 		for (int e : arr) {
 			System.out.print(e +", ");
 		}
@@ -50,5 +50,51 @@ public class Sorting {
 				swap(arr, min, i);
 			}
 		}
+	}
+	public static void merge(int[] arr, int start, int mid, int end) {
+		int i=start;
+		int j=mid+1;
+		int k=0;
+		int[] tempArr = new int[end-start+1];
+		while(i<=mid && j<=end) {
+			if(arr[i]<arr[j]) {
+				tempArr[k]=arr[i];
+				k++;
+				i++;
+			} else {
+				tempArr[k]=arr[j];
+				j++;
+				k++;
+			}
+		}
+		
+		if(i>mid) {
+			while(j<=end) {
+				tempArr[k]=arr[j];
+				k++;
+				j++;
+			}
+		} else {
+			while(i<=mid) {
+				tempArr[k]=arr[i];
+				i++;
+				j++;
+			}
+		}
+		k=0;
+		for(int idx=start; idx<=end; idx++) {
+			arr[idx]=tempArr[k];
+			k++;
+		}
+	}
+	
+	public static void mergeSort(int[] arr, int start, int end) {
+		if(start<end) {
+			int mid = (end+start)/2;
+			mergeSort(arr, start, mid);
+			mergeSort(arr, mid+1, end);
+			merge(arr, start, mid, end);
+		}
+		
 	}
 }
