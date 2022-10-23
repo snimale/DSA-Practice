@@ -2,8 +2,8 @@ package dsa;
 
 public class Sorting {
 	public static void main(String Args[]) {
-		int[] arr = {1, 2, 3, 5, 7, 2, 4, 5, 7};
-		mergeSort(arr, 0, arr.length-1);
+		int[] arr = {1, 0, 0, 9, 7, 9, 4, 5, 5, 3, 8};
+		quickSort(arr, 0, arr.length-1);
 		for (int e : arr) {
 			System.out.print(e +", ");
 		}
@@ -95,6 +95,37 @@ public class Sorting {
 			mergeSort(arr, mid+1, end);
 			merge(arr, start, mid, end);
 		}
+		
+	}
+	
+	public static int sortPivot(int[] arr, int low, int high) {
+		int i=low+1;
+		int j= high;
+		while(i<=j) {
+			while(arr[i]<arr[low] && i<=j) {
+				i++;
+			}
+			while(arr[j]>=arr[low] && i<=j) {
+				j--;
+			}
+			if(i<j) {
+				swap(arr, i, j);
+			}
+			
+		}
+		if(j!=low) {
+			swap(arr, low, j);
+		}
+		return j;
+	}
+	
+	public static void quickSort(int[] arr, int low, int high) {
+		if (low<high) {
+			int pivotIndex = sortPivot(arr, low, high);
+			quickSort(arr, low, pivotIndex-1);
+			quickSort(arr, pivotIndex+1, high);
+		}
+		return;
 		
 	}
 }
