@@ -1,7 +1,7 @@
 package easyQ;
 
 import java.util.HashSet;
-import java.math.*;
+
 
 public class HashSetQuestions {
 	public static void main(String args[]) {
