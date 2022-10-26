@@ -5,7 +5,7 @@ import java.math.*;
 
 public class HashSetQuestions {
 	public static void main(String args[]) {
-		
+		System.out.println("zzz");
 	}
 	
 	public static HashSet<Integer> setUnion(HashSet<Integer> set1, HashSet<Integer> set2) {
@@ -28,6 +28,14 @@ public class HashSetQuestions {
 		}
 		return intersection;
 		
+	}
+	
+	public static int uniqueCount(int[] arr) {
+		HashSet<Integer> uniqueElements = new HashSet<>(arr.length);
+		for(int e : arr) {
+			uniqueElements.add(e);
+		}
+		return uniqueElements.size();
 	}
 	
 }
