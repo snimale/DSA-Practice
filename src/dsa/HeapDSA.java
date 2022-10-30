@@ -13,7 +13,7 @@ class BinaryNode {
 	}
 }
 
-public class Heap {
+public class HeapDSA {
 	static int n1;
 	
 	public static void main(String args[]) {
