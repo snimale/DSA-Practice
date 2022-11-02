@@ -6,8 +6,8 @@ public class PriorityQueueQ {
 	public static void main(String args[]) {
 		
 
-		int[] a = {1, 10, 15, 40, 9, 20, 77, 4, 55};
-		System.out.println(kthsmallest(a, 2));
+		int[] a = {1,2,3};
+		System.out.println(joiningRopeCost(a));
 	
 	}
 	
@@ -40,5 +40,24 @@ public class PriorityQueueQ {
 			}
 		}
 		return pq2.peek();
+	}
+	
+	// connect n ropes 2 at a time with minimum cost
+	// cost of connecting any two rope is sum of length of both ropes
+	
+	public static int joiningRopeCost (int[] ropes) {
+		PriorityQueue<Integer> pq = new PriorityQueue<>();
+		for(int e : ropes) {
+			pq.add(e);
+		}
+		
+		int cost = 0;
+		while (pq.size()>1) {
+			int joined = pq.poll()+pq.poll();
+			cost+=joined;
+			pq.add(joined);
+		}
+		
+		return cost;
 	}
 }
