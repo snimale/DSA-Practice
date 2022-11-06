@@ -116,25 +116,45 @@ class LinkedList {
 			size--;
 		}
 	}
-	//reverse linked list
+	
+	//reverse linked list with loop
 	public static LinkedList reverseLinkedListLoop(LinkedList list) {
 		if (list.size==1 || list.size==0) {
 			return list;
 		} else {
 			Node pn = null;
-			Node cn = list.head;
-			Node nn = null;
+			Node cn = list.head ;
 			while(cn!=null) {
-				nn = cn.next;
+				Node nn = cn.next;
 				cn.next = pn;
 				pn =cn;
 				cn = nn;
 			}
+			list.tail=list.head;
 			list.head = pn;
 			return list;
 		}
 	}
 	
+	//reverse linked list with recursion
+	public static LinkedList reverseLinkedListRecursion(LinkedList list) {
+		list.tail=list.head;
+		list.head=reverseLinkedListRecursionNode(list.head);
+		return list;
+	}
+	private static Node reverseLinkedListRecursionNode(Node currNode) {
+		if(currNode==null) {
+			return null;
+		}
+		
+		if (currNode.next==null) {
+			return currNode;
+		}
+		Node newHead = reverseLinkedListRecursionNode(currNode.next);
+		currNode.next.next=currNode;
+		currNode.next=null;
+		return newHead;
+	}
 	
 	//change data
 	public void set(int index, int data) {
@@ -199,6 +219,14 @@ class LinkedList {
 
 public class LinkedListDSA {
 	public static void main(String args[]) {
-
+		LinkedList list = new LinkedList();
+		for(int i=0; i<6; i++) {
+			list.addAtEnd(i+1);
+		}
+		System.out.println(list);
+		LinkedList.reverseLinkedListRecursion(list);
+		System.out.println(list);
+		System.out.println(list.getHead().data);
+		System.out.println(list.getTail().next);
 	}
 }
