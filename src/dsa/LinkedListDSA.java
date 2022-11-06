@@ -188,6 +188,37 @@ class LinkedList {
 		return null;
 	}
 	
+	// get origin of cycle in linked list
+	public static Node cycleOrigin(LinkedList list) {
+		Node meet = checkCycle(list);
+		Node currNode = list.head;
+		if(meet==null) {
+			return null;
+		}
+		while(meet.data!=currNode.data){
+			meet=meet.next;
+			currNode=currNode.next;
+			// they will always coincide at origin on cycle
+		}
+		return meet;
+	}
+	
+	// remove cycle in linked list
+	public static void removeCycle(LinkedList list) {
+		Node meet = checkCycle(list);
+		Node prev = null;
+		Node currNode = list.head;
+		if(meet==null) {
+			return;
+		}
+		while(meet.data!=currNode.data) {
+			prev=meet;
+			meet=meet.next;
+			currNode=currNode.next;
+		}
+		prev.next=null;
+	}
+	
 	//getters -> head, tail, size, string of elements
 	public Node getHead() {
 		return head;
@@ -243,6 +274,10 @@ public class LinkedListDSA {
 			list.addAtEnd(i+1);
 		}
 		System.out.println(list);
-		System.out.println(LinkedList.checkCycle(list));
+		
+		list.getTail().next=list.getHead().next.next;
+		LinkedList.removeCycle(list);
+		System.out.println(list);
+		 
 	}
 }
