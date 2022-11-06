@@ -169,6 +169,25 @@ class LinkedList {
 		}
 	}
 	
+	// check if cycle exists
+	public static Node checkCycle(LinkedList list) {
+		if(list.head==null || list.head.next==null) {
+			return null;
+		}
+		Node fast = list.head.next.next;
+		Node slow = list.head.next;
+
+		while(fast!=null && fast.next!=null) {
+			if(fast.data==slow.data) {
+				return slow;
+			}
+			fast=fast.next.next;
+			slow=slow.next;
+			
+		}
+		return null;
+	}
+	
 	//getters -> head, tail, size, string of elements
 	public Node getHead() {
 		return head;
@@ -224,9 +243,6 @@ public class LinkedListDSA {
 			list.addAtEnd(i+1);
 		}
 		System.out.println(list);
-		LinkedList.reverseLinkedListRecursion(list);
-		System.out.println(list);
-		System.out.println(list.getHead().data);
-		System.out.println(list.getTail().next);
+		System.out.println(LinkedList.checkCycle(list));
 	}
 }
