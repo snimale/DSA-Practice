@@ -106,6 +106,11 @@ class LLStack {
 
 public class StackDSA {
 	public static void main(String args[]) {
-		
+		// to use stack data structure from collections
+		// do not use Stack class to make stack object because this class uses indexing (it implements vector)
+		// which is unnecessary in stack data structure
+		// rather use Deque (pronounced as deck) interface using ArrayDeque/LinkedList constructor
+		// Deque<Integer> s = new LinkedList<>();
+		// Deque<Integer> s = new ArrayDeque<>();
 	}
 }
