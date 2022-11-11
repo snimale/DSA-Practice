@@ -1,18 +1,16 @@
 package dsa;
 
-import java.util.Stack;
 
 class AStack {
 	private int[] data;
 	private int maxCapacity;
 	private int index;
 	
-	public void push(int num) throws Exception {
+	public void push(int num) {
 		if(index==maxCapacity-1) {
-			throw new Exception("what you doing bro");
+			System.out.println("what you doing bro");
 		} else {
-			index++;
-			data[index] = num;
+			data[++index] = num;
 		}
 	}
 	
@@ -52,13 +50,62 @@ class AStack {
 		this.index = -1;
 	}
 }
+
+
+
+class LLStack {
+	private class Node {
+		int data;
+		Node next;
+		
+		public Node(int data) {
+			this.data=data;
+			this.next=null;
+		}
+	}
+	
+	private Node head;
+	
+	public void push(int num) {
+		Node newNode = new Node(num);
+		newNode.next = head;
+		head = newNode;
+	}
+	
+	public int peek() {
+		if(head==null) {
+			System.out.println("Empty Stack");
+			return -1;
+		} else {
+			return head.data;
+		}
+	}
+	
+	public int pop() {
+		if(head==null) {
+			System.out.println("Empty Stack");
+			return -1;
+		}
+		int temp = head.data;
+		head=head.next;
+		return temp;
+	}
+	
+	
+	public boolean isEmpty() {
+		if(head==null) {
+			return true;
+		}
+		return false;
+	}
+	
+	public LLStack() {
+		head=null;
+	}
+}
+
 public class StackDSA {
 	public static void main(String args[]) {
-		Stack<Integer> s1 = new Stack<>();
-		for(int i=1; i<4; i++) {
-			s1.push(i);
-			System.out.println(s1.peek());
-		}
-		System.out.println("size -> " + s1.size());
+		
 	}
 }
