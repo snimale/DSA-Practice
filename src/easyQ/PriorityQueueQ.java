@@ -1,4 +1,4 @@
-package dsa;
+package easyQ;
 
 import java.util.*;
 

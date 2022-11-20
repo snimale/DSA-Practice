@@ -1,4 +1,4 @@
-package dsa;
+package hardQ;
 
 class Suduko {
 	int[][] board;
