@@ -219,6 +219,14 @@ class LinkedList {
 		prev.next=null;
 	}
 	
+	// check is empty
+	public boolean isEmpty() {
+		if(head==null) {
+			return true;
+		}
+		return false;
+	}
+	
 	//getters -> head, tail, size, string of elements
 	public Node getHead() {
 		return head;
