@@ -56,7 +56,13 @@ class AQueue {
 			System.out.println("error : UnderFlow");
 			return -1;
 		}
-		return queue[endi--];
+		int e = queue[0];
+		for(int i=0; i<endi; i++) {
+			queue[i]=queue[i+1];
+		}
+		endi--;
+		return e;
+		
 	}
 	
 	public int peek() {
