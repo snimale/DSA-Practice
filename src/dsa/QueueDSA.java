@@ -69,7 +69,7 @@ class AQueue {
 		if(endi==-1) {
 			return -1;
 		}
-		return queue[endi];
+		return queue[0];
 	}
 	
 	public int size() {
@@ -86,7 +86,7 @@ class AQueue {
 	public AQueue(int n) {
 		this.queue= new int[n];
 		this.capacity=n;
-		endi=-1;
+		this.endi=-1;
 	}
 }
 public class QueueDSA {
