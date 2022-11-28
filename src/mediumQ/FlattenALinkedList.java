@@ -1,5 +1,7 @@
 package mediumQ;
 
+import java.util.*;
+
 class Node {
 	int data;
 	Node next;
@@ -14,13 +16,17 @@ public class FlattenALinkedList {
 	public static void main(String args[]) {
 		Node head = new Node(1);
 		Node currNode = head;
-		for(int i=2; i<6; i++) {
-			currNode.next = new Node(i);
-			currNode=currNode.next;
-		}
-		currNode=head;
-		while(currNode!=null) {
-			System.out.println(currNode.data);
+		int[] ans = new int[15];
+		int i=0;
+		Queue<Node> q = new ArrayDeque<>();
+		while(!(currNode.next==null) || !q.isEmpty()) {
+			ans[i]=currNode.data;
+			if(!(currNode.child==null)) {
+				q.offer(currNode.child);
+			}
+			if(currNode.next==null) {
+				currNode.next=q.poll();
+			}
 			currNode=currNode.next;
 		}
 	}
