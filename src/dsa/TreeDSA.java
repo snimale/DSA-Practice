@@ -1,11 +1,12 @@
 package dsa;
-import java.util.Scanner;
+import java.util.*;
 public class TreeDSA {
 	public static void main(String args[]) {
 		Node root = createTree();
-		System.out.println(height(root));
-		System.out.println(max(root));
-		System.out.println(min(root));
+		levelOrder(root);
+		//System.out.println(height(root));
+		//System.out.println(max(root));
+		//System.out.println(min(root));
 	}
 	
 	static class Node {
@@ -16,8 +17,8 @@ public class TreeDSA {
 			this.data = data;
 		}
 	}
+	
 	static Scanner sc = new Scanner(System.in);
-	private Node root;
 	public static Node createTree() {
 		System.out.print("Enter Element - ");
 		int e = sc.nextInt();
@@ -33,6 +34,20 @@ public class TreeDSA {
 		
 	}
 	
+	public static void levelOrder(Node root) {
+		Queue<Node> q = new LinkedList<>();
+		q.add(root);
+		while(!q.isEmpty()) {
+			Node currNode=q.poll();
+			System.out.print(currNode.data);
+			if(currNode.left!=null) {
+				q.add(currNode.left);
+			}
+			if(currNode.right!=null) {
+				q.add(currNode.right);
+			}
+		}
+	}
 	public static void preOrder(Node root) {
 		if(root==null) return;
 		System.out.println(root.data);

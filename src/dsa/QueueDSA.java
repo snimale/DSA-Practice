@@ -3,7 +3,7 @@ package dsa;
 
 
 class LLQueue {
-	LinkedList queue;
+	MyLinkedList queue;
 	int size;
 	
 	public void enqueue(int e) {
@@ -32,7 +32,7 @@ class LLQueue {
 	}
 	
 	public LLQueue() {
-		this.queue=new LinkedList();
+		this.queue=new MyLinkedList();
 		this.size=0;
 	}
 }

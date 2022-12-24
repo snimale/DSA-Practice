@@ -9,7 +9,7 @@ class Node {
 	}
 }
 
-class LinkedList {
+class MyLinkedList {
 
 	private Node head;
 	private Node tail;
@@ -118,7 +118,7 @@ class LinkedList {
 	}
 	
 	//reverse linked list with loop
-	public static LinkedList reverseLinkedListLoop(LinkedList list) {
+	public static MyLinkedList reverseLinkedListLoop(MyLinkedList list) {
 		if (list.size==1 || list.size==0) {
 			return list;
 		} else {
@@ -137,7 +137,7 @@ class LinkedList {
 	}
 	
 	//reverse linked list with recursion
-	public static LinkedList reverseLinkedListRecursion(LinkedList list) {
+	public static MyLinkedList reverseLinkedListRecursion(MyLinkedList list) {
 		list.tail=list.head;
 		list.head=reverseLinkedListRecursionNode(list.head);
 		return list;
@@ -170,7 +170,7 @@ class LinkedList {
 	}
 	
 	// check if cycle exists
-	public static Node checkCycle(LinkedList list) {
+	public static Node checkCycle(MyLinkedList list) {
 		if(list.head==null || list.head.next==null) {
 			return null;
 		}
@@ -189,7 +189,7 @@ class LinkedList {
 	}
 	
 	// get origin of cycle in linked list
-	public static Node cycleOrigin(LinkedList list) {
+	public static Node cycleOrigin(MyLinkedList list) {
 		Node meet = checkCycle(list);
 		Node currNode = list.head;
 		if(meet==null) {
@@ -204,7 +204,7 @@ class LinkedList {
 	}
 	
 	// remove cycle in linked list
-	public static void removeCycle(LinkedList list) {
+	public static void removeCycle(MyLinkedList list) {
 		Node meet = checkCycle(list);
 		Node prev = null;
 		Node currNode = list.head;
@@ -268,7 +268,7 @@ class LinkedList {
 	
 	
 	//constructor
-	LinkedList () {
+	MyLinkedList () {
 		this.size=0;
 		this.head=null;
 		this.tail=null;
@@ -277,14 +277,14 @@ class LinkedList {
 
 public class LinkedListDSA {
 	public static void main(String args[]) {
-		LinkedList list = new LinkedList();
+		MyLinkedList list = new MyLinkedList();
 		for(int i=0; i<6; i++) {
 			list.addAtEnd(i+1);
 		}
 		System.out.println(list);
 		
 		list.getTail().next=list.getHead().next.next;
-		LinkedList.removeCycle(list);
+		MyLinkedList.removeCycle(list);
 		System.out.println(list);
 		 
 	}
