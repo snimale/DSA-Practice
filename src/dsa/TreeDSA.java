@@ -3,7 +3,8 @@ import java.util.*;
 public class TreeDSA {
 	public static void main(String args[]) {
 		Node root = createTree();
-		levelOrder(root);
+		leftView(root);
+		//System.out.println(height(root));
 		//System.out.println(height(root));
 		//System.out.println(max(root));
 		//System.out.println(min(root));
@@ -37,8 +38,15 @@ public class TreeDSA {
 	public static void levelOrder(Node root) {
 		Queue<Node> q = new LinkedList<>();
 		q.add(root);
+		q.add(null);
 		while(!q.isEmpty()) {
 			Node currNode=q.poll();
+			if(currNode==null) {
+				if(q.isEmpty()) break;
+				System.out.println();
+				q.add(null);
+				continue;
+			}
 			System.out.print(currNode.data);
 			if(currNode.left!=null) {
 				q.add(currNode.left);
@@ -47,6 +55,35 @@ public class TreeDSA {
 				q.add(currNode.right);
 			}
 		}
+	}
+	private static void leftView(Node root, int level, ArrayList<Integer> lw) {
+		if(root==null) {
+			return;
+		}
+		if(lw.get(level)==0) {
+			lw.set(level, root.data);
+		}
+		leftView(root.left, level+1, lw);
+		leftView(root.right, level+1, lw);
+	}
+	public static void leftView(Node root) {
+		ArrayList<Integer> lw = new ArrayList<>();
+		for(int i=0; i<height(root); i++) {
+			lw.add(0);
+		}
+		leftView(root, 0, lw);
+		for(int i=0; i<lw.size(); i++) {
+			System.out.println(lw.get(i));
+		}
+	}
+	public static void rightView() {
+		
+	}
+	public static void topView() {
+		
+	}
+	public static void bottomView() {
+		
 	}
 	public static void preOrder(Node root) {
 		if(root==null) return;
