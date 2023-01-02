@@ -3,7 +3,7 @@ import java.util.*;
 public class TreeDSA {
 	public static void main(String args[]) {
 		Node root = createTree();
-		leftView(root);
+		rightView(root);
 		//System.out.println(height(root));
 		//System.out.println(height(root));
 		//System.out.println(max(root));
@@ -56,28 +56,44 @@ public class TreeDSA {
 			}
 		}
 	}
-	private static void leftView(Node root, int level, ArrayList<Integer> lw) {
-		if(root==null) {
-			return;
+	private static void leftView(Node root) {
+		Queue<Node> q = new LinkedList<>();
+		q.add(root);
+		q.add(null);
+		boolean left=true;
+		while(!q.isEmpty()) {
+			Node currNode=q.poll();
+			if(left==true) {
+				System.out.print(currNode.data+"\n"); 
+				left=false;
+			}
+			if(currNode==null) {
+				if(q.isEmpty()) break;
+				q.add(null);
+				left=true;
+			} else {
+				if(currNode.left!=null) q.add(currNode.left);
+				if(currNode.right!=null) q.add(currNode.right);
+			}
 		}
-		if(lw.get(level)==0) {
-			lw.set(level, root.data);
-		}
-		leftView(root.left, level+1, lw);
-		leftView(root.right, level+1, lw);
 	}
-	public static void leftView(Node root) {
-		ArrayList<Integer> lw = new ArrayList<>();
-		for(int i=0; i<height(root); i++) {
-			lw.add(0);
+	public static void rightView(Node root) {
+		Queue<Node> q = new LinkedList<>();
+		q.add(root);
+		q.add(null);
+		while(!q.isEmpty()) {
+			Node currNode=q.poll();
+			if(currNode==null) {
+				if(q.isEmpty()) break;
+				else q.add(null);
+			} else {
+				if(q.peek()==null) {
+					System.out.print(currNode.data+"\n"); 
+				}
+				if(currNode.left!=null) q.add(currNode.left);
+				if(currNode.right!=null) q.add(currNode.right);
+			}
 		}
-		leftView(root, 0, lw);
-		for(int i=0; i<lw.size(); i++) {
-			System.out.println(lw.get(i));
-		}
-	}
-	public static void rightView() {
-		
 	}
 	public static void topView() {
 		
