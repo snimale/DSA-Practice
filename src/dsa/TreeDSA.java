@@ -6,6 +6,7 @@ public class TreeDSA {
 		Node root = createTree();
 		bottomView(root);
 		//rightView(root);
+		//leftView(root);
 		//System.out.println(height(root));
 		//System.out.println(height(root));
 		//System.out.println(max(root));
@@ -50,9 +51,9 @@ public class TreeDSA {
 			return null;
 		}
 		Node newNode = new Node(e);
-		System.out.println("\nEnter left of"+e);
+		System.out.println("Enter left of"+e);
 		newNode.left=createTree();
-		System.out.println("\nEnter right of"+e);
+		System.out.println("Enter right of"+e);
 		newNode.right=createTree();
 		return newNode;
 		
@@ -119,7 +120,7 @@ public class TreeDSA {
 		}
 	}
 	public static void topView(Node root) {
-		HashMap<Integer, Pair> topview= new HashMap<>();
+		HashMap<Integer, Pair> topView= new HashMap<>();
 		Pair head = new Pair(root, 0);
 		Queue<Pair> q = new LinkedList<>();
 		q.add(head);
@@ -130,16 +131,16 @@ public class TreeDSA {
 				if(q.isEmpty()) break;
 				else q.add(null);
 			} else {
-				if (!topview.containsKey(currPair.column)) topview.put(currPair.column, currPair);
+				if (!topView.containsKey(currPair.column)) topView.put(currPair.column, currPair);
 				if(currPair.node.left!=null) q.add(new Pair(currPair.node.left, currPair.column-1));
 				if(currPair.node.right!=null) q.add(new Pair(currPair.node.right, currPair.column+1));
 			}
 		}
-		ArrayList<Pair> mylist = new ArrayList<>();
-		mylist.addAll(topview.values());
-		Collections.sort(mylist, new PairComparator());
+		ArrayList<Pair> myList = new ArrayList<>();
+		myList.addAll(topView.values());
+		Collections.sort(myList, new PairComparator());
 		System.out.println("Top View = ");
-		for(Pair p : mylist) {
+		for(Pair p : myList) {
 			System.out.print(p.node.data+" - ");
 		}
 	}
@@ -160,11 +161,11 @@ public class TreeDSA {
 				if(currPair.node.right!=null) q.add(new Pair(currPair.node.right, currPair.column+1));
 			}
 		}
-		ArrayList<Pair> mylist = new ArrayList<>();
-		mylist.addAll(bottomView.values());
-		Collections.sort(mylist, new PairComparator());
+		ArrayList<Pair> myList = new ArrayList<>();
+		myList.addAll(bottomView.values());
+		Collections.sort(myList, new PairComparator());
 		System.out.println("Bottom View = ");
-		for(Pair p : mylist) {
+		for(Pair p : myList) {
 			System.out.print(p.node.data+" - ");
 		}
 	}
