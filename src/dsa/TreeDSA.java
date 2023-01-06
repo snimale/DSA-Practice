@@ -1,13 +1,27 @@
 package dsa;
 import java.util.*;
+import java.util.Map.Entry;
 public class TreeDSA {
 	public static void main(String args[]) {
 		Node root = createTree();
-		rightView(root);
+		bottomView(root);
+		//rightView(root);
 		//System.out.println(height(root));
 		//System.out.println(height(root));
 		//System.out.println(max(root));
 		//System.out.println(min(root));
+		
+	}
+	
+	static class PairComparator implements Comparator<Pair> {
+	
+		@Override
+		public int compare(Pair p1, Pair p2) {
+			if(p1.column>p2.column) return 1;
+			else if(p1.column<p2.column) return -1;
+			else return 0;
+		}
+		
 	}
 	
 	static class Node {
@@ -16,6 +30,15 @@ public class TreeDSA {
 		Node right;
 		Node(int data) {
 			this.data = data;
+		}
+	}
+	
+	static class Pair {
+		Node node;
+		int column;
+		Pair(Node node, int column) {
+			this.node=node;
+			this.column=column;
 		}
 	}
 	
@@ -95,11 +118,55 @@ public class TreeDSA {
 			}
 		}
 	}
-	public static void topView() {
-		
+	public static void topView(Node root) {
+		HashMap<Integer, Pair> topview= new HashMap<>();
+		Pair head = new Pair(root, 0);
+		Queue<Pair> q = new LinkedList<>();
+		q.add(head);
+		q.add(null);
+		while(!q.isEmpty()) {
+			Pair currPair = q.poll();
+			if(currPair==null) {
+				if(q.isEmpty()) break;
+				else q.add(null);
+			} else {
+				if (!topview.containsKey(currPair.column)) topview.put(currPair.column, currPair);
+				if(currPair.node.left!=null) q.add(new Pair(currPair.node.left, currPair.column-1));
+				if(currPair.node.right!=null) q.add(new Pair(currPair.node.right, currPair.column+1));
+			}
+		}
+		ArrayList<Pair> mylist = new ArrayList<>();
+		mylist.addAll(topview.values());
+		Collections.sort(mylist, new PairComparator());
+		System.out.println("Top View = ");
+		for(Pair p : mylist) {
+			System.out.print(p.node.data+" - ");
+		}
 	}
-	public static void bottomView() {
-		
+	public static void bottomView(Node root) {
+		HashMap<Integer, Pair> bottomView= new HashMap<>();
+		Pair head = new Pair(root, 0);
+		Queue<Pair> q = new LinkedList<>();
+		q.add(head);
+		q.add(null);
+		while(!q.isEmpty()) {
+			Pair currPair = q.poll();
+			if(currPair==null) {
+				if(q.isEmpty()) break;
+				else q.add(null);
+			} else {
+				bottomView.put(currPair.column, currPair);
+				if(currPair.node.left!=null) q.add(new Pair(currPair.node.left, currPair.column-1));
+				if(currPair.node.right!=null) q.add(new Pair(currPair.node.right, currPair.column+1));
+			}
+		}
+		ArrayList<Pair> mylist = new ArrayList<>();
+		mylist.addAll(bottomView.values());
+		Collections.sort(mylist, new PairComparator());
+		System.out.println("Bottom View = ");
+		for(Pair p : mylist) {
+			System.out.print(p.node.data+" - ");
+		}
 	}
 	public static void preOrder(Node root) {
 		if(root==null) return;
