@@ -4,7 +4,8 @@ import java.util.Map.Entry;
 public class TreeDSA {
 	public static void main(String args[]) {
 		Node root = createTree();
-		bottomView(root);
+		System.out.print(diameter(root));
+		//bottomView(root);
 		//rightView(root);
 		//leftView(root);
 		//System.out.println(height(root));
@@ -193,6 +194,11 @@ public class TreeDSA {
 	public static int height(Node root) {
 		if(root==null) return 0;
 		return 1+Math.max(height(root.left), height(root.right));
+	}
+	
+	public static int diameter(Node root) {
+		if(root==null) return 0;
+		return Math.max(height(root.left)+height(root.right)+1, Math.max(diameter(root.left), diameter(root.right)));
 	}
 	
 	public static int max(Node root) {
