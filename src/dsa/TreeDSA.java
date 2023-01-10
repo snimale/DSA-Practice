@@ -4,7 +4,8 @@ import java.util.Map.Entry;
 public class TreeDSA {
 	public static void main(String args[]) {
 		Node root = createTree();
-		System.out.print(diameter(root));
+		//System.out.println(diameter(root));
+		//printFlattenTree(flatten(root));
 		//bottomView(root);
 		//rightView(root);
 		//leftView(root);
@@ -58,6 +59,45 @@ public class TreeDSA {
 		newNode.right=createTree();
 		return newNode;
 		
+	}
+	
+	static Node head = null;
+	static Node previous = null;
+	public static void flatten1(Node root) {
+		if(root==null) return;
+		flatten1(root.left);
+		if(head==null && previous==null) {
+			head=root;
+		} else {
+			root.left=previous;
+			previous.right=root;	
+		}
+		previous=root;
+		flatten1(root.right);
+	}
+	
+	public static Node flatten(Node root) {
+		head = null;
+		previous = null;
+		flatten1(root);
+		return head;
+			
+	}
+	
+	public static void printFlattenTree(Node head) {
+		Node temp=head;
+		while(temp!=null) {
+			System.out.print(temp.data+" -> ");
+			temp=temp.right;
+		}
+		System.out.println("null");
+		temp=head;
+		System.out.print("null");
+		while(temp!=null) {
+			System.out.print(temp.data+" <- ");
+			temp=temp.right;
+		}
+
 	}
 	
 	public static void levelOrder(Node root) {
