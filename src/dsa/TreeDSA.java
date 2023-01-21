@@ -3,7 +3,9 @@ import java.util.*;
 import java.util.Map.Entry;
 public class TreeDSA {
 	public static void main(String args[]) {
+		System.out.println("Enter InOrder array representing tree");
 		Node root = createTree();
+		// sample tree -> 1 2 3 4 5 -1 -1 -1 6 -1 -1 7 8 -1 -1 9 10 -1 -1 -1 11 -1 12 15 -1 16 17 -1 -1 -1 13 -1 14 -1 -1
 		//System.out.println(diameter(root));
 		//printFlattenTree(flatten(root));
 		//bottomView(root);
@@ -13,7 +15,8 @@ public class TreeDSA {
 		//System.out.println(height(root));
 		//System.out.println(max(root));
 		//System.out.println(min(root));
-		
+		//System.out.println(timeToBurnTree(root, 6, 0));
+		System.out.println(lowestCommonAncestor(root, new Node(8), new Node(9)));
 	}
 	
 	static class PairComparator implements Comparator<Pair> {
@@ -34,6 +37,13 @@ public class TreeDSA {
 		Node(int data) {
 			this.data = data;
 		}
+		
+		@Override
+		public String toString() {
+			return "Node [data=" + data + "]";
+		}
+		
+		
 	}
 	
 	static class Pair {
@@ -47,15 +57,12 @@ public class TreeDSA {
 	
 	static Scanner sc = new Scanner(System.in);
 	public static Node createTree() {
-		System.out.print("Enter Element - ");
 		int e = sc.nextInt();
 		if(e==-1) {
 			return null;
 		}
 		Node newNode = new Node(e);
-		System.out.println("Enter left of"+e);
 		newNode.left=createTree();
-		System.out.println("Enter right of"+e);
 		newNode.right=createTree();
 		return newNode;
 		
@@ -231,6 +238,29 @@ public class TreeDSA {
 		System.out.println(root.data);
 	}
 	
+	public static boolean containsNode(Node root, int Target) {
+		if(root==null) return false;
+		if(root.data==Target) return true;
+		return containsNode(root.left, Target) || containsNode(root.right, Target);
+	}
+	public static int timeToBurnTree(Node root, int burner, int farness) {
+		if(root==null) return 0;
+		if(root.data==burner) return Math.max(height(root), farness+1);
+		if(containsNode(root.left, burner)) return timeToBurnTree(root.left, burner, Math.max(farness+1, height(root.right)+1));
+		else return timeToBurnTree(root.right, burner, Math.max(farness+1, height(root.left)+1));
+	}
+	
+	public static Node lowestCommonAncestor(Node root, Node a, Node b) {
+		if(root==null) return null;
+		if(root.data==a.data || root.data==b.data) return root;
+		else if ((containsNode(root.left, a.data) && containsNode(root.left, b.data))) return lowestCommonAncestor(root.left, a, b);
+		else if ((containsNode(root.right, a.data) && containsNode(root.right, b.data))) return lowestCommonAncestor(root.right, a, b);
+		return root;
+	}
+//	public static Node makeBST(Node root) {
+//		
+//	}
+//	
 	public static int height(Node root) {
 		if(root==null) return 0;
 		return 1+Math.max(height(root.left), height(root.right));
