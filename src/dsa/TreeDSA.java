@@ -19,7 +19,7 @@ public class TreeDSA {
 		System.out.println(lowestCommonAncestor(root, new Node(8), new Node(9)));
 	}
 	
-	static class PairComparator implements Comparator<Pair> {
+	static class PairComparator implements Comparator<Pair> { 
 	
 		@Override
 		public int compare(Pair p1, Pair p2) {
