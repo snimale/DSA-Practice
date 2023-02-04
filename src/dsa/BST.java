@@ -6,7 +6,9 @@ public class BST {
 	public static void main(String[] args) {
 		int[] data = {20, 1, 99, 10, 100, 26, 834, 2, 111, 79, 69, 99};
 		Node root = createBST(data);
-		preorder(root);
+		//inOrder(root);
+		//deleteNode(root, new Node(1));
+		inOrder(root);
 	}
 	
 	public static Node createBST(int[] data) {
@@ -23,10 +25,34 @@ public class BST {
 		return root;
 	}
 	
-	public static void preorder(Node root) {
+	private static Node nextInOrder(Node root) {
+		if(root.left==null) return root;
+		return nextInOrder(root.left);
+	}
+	
+	public static Node deleteNode(Node root, Node noNeed) {
+		if(root==null) return null;
+		if(noNeed.data<root.data) {
+			root.left = deleteNode(root.left, noNeed);
+		}
+		else if(noNeed.data>root.data) {
+			root.right = deleteNode(root.right, noNeed);
+		}
+		else {
+			if(root.left==null) return root.right;
+			else if(root.right==null) return root.left;
+			else {
+				root.data=nextInOrder(root).data;
+				root.left=deleteNode(root.left, new Node(root.data));
+			}
+		}
+		return root;
+	}
+	
+	public static void inOrder(Node root) {
 		if(root==null) return;
-		preorder(root.left);
+		inOrder(root.left);
 		System.out.printf("%d, ", root.data);
-		preorder(root.right);
+		inOrder(root.right);
 	}
 }
