@@ -1,5 +1,7 @@
 package dsa;
 
+import java.util.HashSet;
+
 import dsa.TreeDSA.Node;
 
 public class BST {
@@ -8,7 +10,9 @@ public class BST {
 		Node root = createBST(data);
 		//inOrder(root);
 		//deleteNode(root, new Node(1));
+		//System.out.println(checkBST(root));
 		inOrder(root);
+		//System.out.println(twosum(21, root));
 	}
 	
 	public static Node createBST(int[] data) {
@@ -47,6 +51,48 @@ public class BST {
 			}
 		}
 		return root;
+	}
+	
+	private static HashSet<Integer> hs = new HashSet<>();;
+	public static boolean twosum(int sum, Node root) {
+		return twosumUtil(sum, root);
+	}
+	
+	public static boolean twosumUtil(int sum, Node root) {
+		if(root==null) return false;
+		if(hs.contains(sum - root.data)) return true;
+		hs.add(root.data);
+		return twosum(sum, root.right) || twosum(sum, root.left);
+	}
+	
+//	public static int getMax(Node root) {
+//		if(root==null) return Integer.MIN_VALUE;
+//		else return Math.max(Math.max(getMax(root.right), getMax(root.left)), root.data);
+//	}
+//	
+//	public static int getMin(Node root) {
+//		if(root==null) return Integer.MAX_VALUE;
+//		else return Math.min(Math.min(getMin(root.right), getMin(root.left)), root.data);
+//		
+//	}
+//	
+//	public static boolean checkBST(Node root) {
+//		if(root==null) return true;
+//		if(getMax(root.left)<root.data && root.data<getMin(root.right)) return checkBST(root.left) && checkBST(root.right);
+//		else return false;
+//
+//	}
+	
+	public static boolean checkBST(Node root) {
+		return checkBSTUtil(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+	}
+	
+	private static boolean checkBSTUtil(Node root, int min, int max) {
+		if(root==null) return true;
+		else if(root.data>min && root.data<max)	{
+			return checkBSTUtil(root.left, Integer.MIN_VALUE, root.data) && checkBSTUtil(root.right, root.data, Integer.MAX_VALUE);
+		}
+		return false;
 	}
 	
 	public static void inOrder(Node root) {
