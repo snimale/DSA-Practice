@@ -12,6 +12,7 @@ public class BST {
 		//deleteNode(root, new Node(1));
 		//System.out.println(checkBST(root));
 		inOrder(root);
+		//System.out.println("\n" + floorValue(root, 75) + " " + ceilValue(root, 75));
 		//System.out.println(twosum(21, root));
 	}
 	
@@ -63,6 +64,26 @@ public class BST {
 		if(hs.contains(sum - root.data)) return true;
 		hs.add(root.data);
 		return twosum(sum, root.right) || twosum(sum, root.left);
+	}
+	
+	public static int floorValue(Node root, int reference) {
+		return floorValueUtil(root, reference, Integer.MIN_VALUE);
+	}
+	
+	public static int floorValueUtil(Node root, int reference, int currFloor) {
+		if(root==null) return currFloor;
+		if(root.data>reference) return floorValueUtil(root.left, reference, currFloor);
+		else return floorValueUtil(root.right, reference, root.data);
+	}
+	
+	public static int ceilValue(Node root, int reference) {
+		return ceilValueUtil(root, reference, Integer.MAX_VALUE);
+	}
+	
+	public static int ceilValueUtil(Node root, int reference, int currCeil) {
+		if(root==null) return currCeil;
+		if(root.data>reference) return ceilValueUtil(root.left, reference, root.data);
+		else return ceilValueUtil(root.right, reference, currCeil);
 	}
 	
 //	public static int getMax(Node root) {
