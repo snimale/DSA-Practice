@@ -15,8 +15,9 @@ public class TreeDSA {
 		//System.out.println(height(root));
 		//System.out.println(max(root));
 		//System.out.println(min(root));
-		//System.out.println(timeToBurnTree(root, 6, 0));
-		System.out.println(lowestCommonAncestor(root, new Node(8), new Node(9)));
+		//System.out.println(timeToBurnTree(root, 6, 0));	
+		//System.out.println(lowestCommonAncestor(root, new Node(8), new Node(9)));
+		verticalOrder(root);
 	}
 	
 	static class PairComparator implements Comparator<Pair> { 
@@ -105,6 +106,26 @@ public class TreeDSA {
 			temp=temp.right;
 		}
 
+	}
+	
+	public static void verticalOrder(Node root) {
+		Queue<Pair> q = new LinkedList<>();
+		q.add(new Pair(root, 0));
+		TreeMap<Integer, ArrayList<Node>> map = new TreeMap<>();
+		while(!q.isEmpty()) {
+			Pair p = q.poll();
+			if(map.containsKey(p.column)) map.get(p.column).add(p.node);
+			else {
+				map.put(p.column, new ArrayList<>());
+				map.get(p.column).add(p.node);
+			}
+			if(p.node.left!=null) q.add(new Pair(p.node.left, p.column-1));
+			if(p.node.right!=null) q.add(new Pair(p.node.right, p.column+1));
+		}
+		for(Map.Entry<Integer, ArrayList<Node>> e : map.entrySet()) {
+			for(Node ele : e.getValue()) System.out.print(ele.data+" ");
+			System.out.println();
+		}
 	}
 	
 	public static void levelOrder(Node root) {
