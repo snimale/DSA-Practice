@@ -264,6 +264,7 @@ public class TreeDSA {
 		if(root.data==Target) return true;
 		return containsNode(root.left, Target) || containsNode(root.right, Target);
 	}
+	
 	public static int timeToBurnTree(Node root, int burner, int farness) {
 		if(root==null) return 0;
 		if(root.data==burner) return Math.max(height(root), farness+1);
@@ -278,10 +279,7 @@ public class TreeDSA {
 		else if ((containsNode(root.right, a.data) && containsNode(root.right, b.data))) return lowestCommonAncestor(root.right, a, b);
 		return root;
 	}
-//	public static Node makeBST(Node root) {
-//		
-//	}
-//	
+
 	public static int height(Node root) {
 		if(root==null) return 0;
 		return 1+Math.max(height(root.left), height(root.right));
