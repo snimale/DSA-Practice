@@ -3,7 +3,7 @@ import java.util.*;
 
 public class InfixPostfixPrefix {
 	private static Deque<Character> stack = new ArrayDeque<>();
-	
+	private static Deque<String> stack2 = new ArrayDeque<>();	
 	public static void main(String args[]) {
 		// TEST CASE - K+L-M*N+(A^B)*C/D-P*Q
 		// TEST CASE2 = - (p*q^R)/a*C-D^e
@@ -13,15 +13,39 @@ public class InfixPostfixPrefix {
 		sc.close();
 		String postfixExpression = infixToPostfix(InfixExpression);
 		String prefixExpression = infixToPrefix(InfixExpression);
-		System.out.println("Postfix Expression : " + postfixExpression);
-		System.out.println("Prefix Expression : " + prefixExpression);
+		System.out.println("Postfix Expression : " + postfixToInfix(postfixExpression));
+		System.out.println("Prefix Expression : " + prefixToInfix(prefixExpression));
+	}
+	
+	public static String postfixToInfix(String postfixExpression) {
+		stack2.clear();
+		for(int i=0; i<postfixExpression.length(); i++) {
+			char curr = postfixExpression.charAt(i);
+			if(isOperand(curr)) stack2.push(String.valueOf(curr));
+			else {
+				String temp = stack2.pop();
+				stack2.push(stack2.pop() + String.valueOf(curr) + temp);
+			}
+		}
+		return stack2.pop();
+	}
+	
+	public static String prefixToInfix(String prefixExpression) {
+		stack2.clear();
+		for(int i=prefixExpression.length()-1; i>=0; i--) {
+			char curr = prefixExpression.charAt(i);
+			if(isOperand(curr)) stack2.push(String.valueOf(curr));
+			else {
+				stack2.push(stack2.pop() + String.valueOf(curr) + stack2.pop());
+			}
+		}
+		return stack2.pop();
 	}
 	
 	public static String infixToPrefix(String infixExpression) {
 		StringBuilder prefixExpression = new StringBuilder();
 		stack.clear();
 		for(int i=infixExpression.length()-1; i>=0; i--) {
-			
 			char curr = infixExpression.charAt(i);
 			if(isOperand(curr)) prefixExpression.append(curr);
 			else {
