@@ -3,7 +3,7 @@ import java.util.*;
 import java.util.Map.Entry;
 public class TreeDSA {
 	public static void main(String args[]) {
-		System.out.println("Enter InOrder array representing tree");
+		System.out.println("Enter PreOrder array representing tree");
 		Node root = createTree();
 		// sample tree -> 1 2 3 4 5 -1 -1 -1 6 -1 -1 7 8 -1 -1 9 10 -1 -1 -1 11 -1 12 15 -1 16 17 -1 -1 -1 13 -1 14 -1 -1
 		//System.out.println(diameter(root));
@@ -17,11 +17,15 @@ public class TreeDSA {
 		//System.out.println(min(root));
 		//System.out.println(timeToBurnTree(root, 6, 0));	
 		//System.out.println(lowestCommonAncestor(root, new Node(8), new Node(9)));
-		verticalOrder(root);
+		//verticalOrder(root);
+		postOrderNonRecursive(root);
+		System.out.println();
+		postOrderNonRecursive2(root);
+		System.out.println();
+		postOrder(root);
 	}
 	
 	static class PairComparator implements Comparator<Pair> { 
-	
 		@Override
 		public int compare(Pair p1, Pair p2) {
 			if(p1.column>p2.column) return 1;
@@ -149,6 +153,7 @@ public class TreeDSA {
 			}
 		}
 	}
+	
 	private static void leftView(Node root) {
 		Queue<Node> q = new LinkedList<>();
 		q.add(root);
@@ -170,6 +175,7 @@ public class TreeDSA {
 			}
 		}
 	}
+	
 	public static void rightView(Node root) {
 		Queue<Node> q = new LinkedList<>();
 		q.add(root);
@@ -188,6 +194,7 @@ public class TreeDSA {
 			}
 		}
 	}
+	
 	public static void topView(Node root) {
 		HashMap<Integer, Pair> topView= new HashMap<>();
 		Pair head = new Pair(root, 0);
@@ -213,6 +220,7 @@ public class TreeDSA {
 			System.out.print(p.node.data+" - ");
 		}
 	}
+	
 	public static void bottomView(Node root) {
 		HashMap<Integer, Pair> bottomView= new HashMap<>();
 		Pair head = new Pair(root, 0);
@@ -238,25 +246,116 @@ public class TreeDSA {
 			System.out.print(p.node.data+" - ");
 		}
 	}
+	
 	public static void preOrder(Node root) {
 		if(root==null) return;
-		System.out.println(root.data);
+		System.out.print(root.data+" ");
 		preOrder(root.left);
 		preOrder(root.right);
+	}
+	
+	public static void preOrderNonRecursive(Node root) {
+		Deque<Node> tempStk = new ArrayDeque<>();
+		Node temp = root;
+		while(temp!=null) {
+			System.out.print(temp.data+" ");
+			tempStk.push(temp);
+			temp = temp.left;
+		}
+		while(!tempStk.isEmpty()) {
+			temp = tempStk.pop().right;
+			while(temp!=null) {
+				System.out.print(temp.data+" ");
+				tempStk.push(temp);
+				temp=temp.left;
+			}
+		}
 	}
 	
 	public static void inOrder(Node root) {
 		if(root==null) return;
-		preOrder(root.left);
-		System.out.println(root.data);
-		preOrder(root.right);
+		inOrder(root.left);
+		System.out.print(root.data+" ");
+		inOrder(root.right);
+	}
+
+	public static void inOrderNonRecursive(Node root) {
+		Deque<Node> tempStk = new ArrayDeque<>();
+		Node temp = root;
+		if(temp==null) return;
+		while(temp!=null) {
+			tempStk.push(temp);
+			temp=temp.left;
+		}
+		while(!tempStk.isEmpty()) {
+			temp=tempStk.pop();
+			System.out.print(temp.data+" ");
+			temp=temp.right;
+			while(temp!=null) {
+				tempStk.push(temp);
+				temp=temp.left;
+			}
+		}
 	}
 	
 	public static void postOrder(Node root) {
 		if(root==null) return;
-		preOrder(root.left);
-		preOrder(root.right);
-		System.out.println(root.data);
+		postOrder(root.left);
+		postOrder(root.right);
+		System.out.print(root.data+" ");
+	}
+	
+	// the one sir gave
+	public static void postOrderNonRecursive(Node root) {
+		if(root==null) return;
+		Deque<Node> tempStk = new ArrayDeque<>();
+		Node temp=root;
+		Node prev=null;
+		do {
+			while(temp!=null) {
+				tempStk.push(temp);
+				temp=temp.left;
+			}
+			while(temp==null && !tempStk.isEmpty()) {
+				temp=tempStk.peek();
+				if(temp.right==prev || temp.right==null) {
+					System.out.print(temp.data+" ");
+					tempStk.pop();
+					prev=temp;
+					temp=null;
+				} else {
+					temp=temp.right;
+				}
+			}
+		} while(!tempStk.isEmpty());
+	}
+	
+	//the one i try
+	public static void postOrderNonRecursive2(Node root) {
+		if(root==null) return;
+		Deque<Node> tempStk = new ArrayDeque<>();
+		Node temp=root;
+		Node prev=null;
+
+		while(temp!=null) {
+			tempStk.push(temp);
+			temp=temp.left;
+		}
+		while(!tempStk.isEmpty()) {
+			temp=tempStk.peek();
+			if(temp.right==prev || temp.right==null) {
+				System.out.print(temp.data+" ");
+				tempStk.pop();
+				prev=temp;
+			} else {
+				temp=temp.right;
+				while(temp!=null) {
+					tempStk.push(temp);
+					temp=temp.left;
+				}
+			}
+		}
+
 	}
 	
 	public static boolean containsNode(Node root, int Target) {
