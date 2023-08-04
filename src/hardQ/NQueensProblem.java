@@ -35,66 +35,36 @@ public class NQueensProblem {
 	//TIME COMPLEXITY -> N!
 	public static void main(String args[]) {
 		Board b1 = new Board();
-		b1.createBoard(30);
+		b1.createBoard(10);
 		solution(b1, 0);
 	}
 	
-	public static boolean isSafe(boolean[][] board, int r, int c) {
-		int size = board.length;
-		int col = c;
-		int row = r;
-		
-		//row check
-		for(int i=0; i<size; i++) {
-			if(board[r][i]) {
-				return false;
-			}
-		}
-		
-		//column check
-		for(int i=0; i<size; i++) {
-			if(board[i][c]) {
-				return false;
-			}
-		}
-		
-		//lower-right check
-		while(row<size && col<size) {
-			if(board[row++][col++]) {
-				return false;
-			}
-		}
-		col=c;
-		row=r;
-		
-		//lower-left check
-		while(col>0 && row<size) {
-			if(board[row++][col--]) {
-				return false;
-			}
-		}
-		col=c;
-		row=r;
-		
-		//upper-right check
-		while(row>0 && col<size) {
-			if(board[row--][col++]) {
-				return false;
-			}
-		}
-		col=c;
-		row=r;
-		
-		//upper-left check
-		while(row>0 && col>0) {
-			if(board[row--][col--]) {
-				return false;
-			}
-		}
-		col=c;
-		row=r;
-		
-		return true;
+	public static boolean isSafe(boolean[][] board, int iq, int jq) {
+        for(int i=0; i<board.length; i++) {
+            if(board[i][jq]==true) return false;
+        }
+
+        for(int i=0; i<board.length; i++) {
+            int ic=iq-i, jc=jq-i;
+            if(!(ic>=board.length || jc>=board.length || ic<0 || jc<0)) {
+            	if(board[ic][jc]==true) return false;
+            }
+
+            ic=iq-i; jc=jq+i;
+            if(!(ic>=board.length || jc>=board.length || ic<0 || jc<0)) {
+                if(board[ic][jc]==true) return false;
+            }
+            
+            ic=iq+i; jc=jq-i;
+            if(!(ic>=board.length || jc>=board.length || ic<0 || jc<0)) {
+            	if(board[ic][jc]==true) return false;
+            }
+            
+            ic=iq+i; jc=jq+i;
+            if(!(ic>=board.length || jc>=board.length || ic<0 || jc<0)) {
+            	if(board[ic][jc]==true) return false;
+            }
+        } return true;
 	}
 	
 	public static boolean solution(Board b, int r) {
