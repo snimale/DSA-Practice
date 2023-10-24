@@ -1,3 +1,2 @@
 # anuj-sir-DSA
-DSA course and questions 
-
+This repo contains practice code for DSA with questions, mainly in JAVA and C programming.
