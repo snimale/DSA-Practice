@@ -1,0 +1,5 @@
+binary tree :
+- height non recursive
+- print all ancestors
+- get mirror
+- check if mirror

@@ -256,8 +256,25 @@ int height_recursive(tree_node *root) {
     else return int_max(height_recursive(root->left), height_recursive(root->right)) + 1;
 }
 
-void height_non_recursive() {
-
+int height_non_recursive(tree_node *root) {
+    node *queue=NULL;
+    enqueue(&queue, root);
+    enqueue(&queue, get_null_node());
+    int height=0;
+    while(isEmpty(&queue)==0) {
+        tree_node *temp = dequeue(&queue);
+        if(temp->data == get_null_node()->data) {
+            height++;
+            if(isEmpty(&queue)==1) {
+                break;
+            } else {
+                enqueue(&queue, get_null_node());
+            }
+        } else {
+            if(temp->left!=NULL) enqueue(&queue, temp->left);
+            if(temp->right!=NULL) enqueue(&queue, temp->right);
+        }
+    } return height;
 }
 
 int get_max_recursive(tree_node *root) {
@@ -372,12 +389,26 @@ void sum_non_recursive() {
 
 }
 
-void get_mirror() {
+tree_node *get_mirror(tree_node *root) {
     // given a tree, return its mirror tree
+    if(root==NULL) return NULL;
+    tree_node *newNode = (tree_node *)malloc(sizeof(tree_node));
+    newNode -> data = root -> data;
+    newNode -> right = get_mirror(root->left);
+    newNode -> left = get_mirror(root->right);
+    return newNode;
 }
 
-void check_if_mirror() {
-
+int check_if_mirror(tree_node *root1, tree_node *root2) {
+    if(root1==NULL && root2==NULL) {
+        return 1;
+    } else if(root1!=NULL && root2!=NULL) {
+        if(root1->data == root2->data) {
+            return check_if_mirror(root1->left, root2->right) & check_if_mirror(root1->right, root2->left);
+        } else return 0;
+    } else {
+        return 0;
+    }
 }
 
 void get_least_common_ancestor() {
@@ -392,8 +423,32 @@ void create_binary_tree_from_IN_POST() {
     // given inorder and postorder
 }
 
-void print_all_ancestors() {
+int print_all_ancestors_util(int n, tree_node *root, node **stack) {
+    if(root == NULL) return 0;
+    if(root->data == n) {
+        return 1;
+    } else {
+        if(print_all_ancestors_util(n, root->right, stack)==1) {
+            push(stack, root);
+            return 1;
+        } else if(print_all_ancestors_util(n, root->left, stack)==1) {
+            push(stack, root);
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+
+void print_all_ancestors(int n, tree_node *root) {
     // given a node
+    node *stack = NULL;
+    print_all_ancestors_util(n, root, &stack);
+    if(isEmpty(&stack)==1) printf(" Element Not In Tree");
+    while(isEmpty(&stack)==0) {
+        tree_node *temp = pop(&stack);
+        printf(" %d", temp->data);
+    } return;
 }
 
 void zig_zag_order() {
@@ -409,7 +464,7 @@ int main() {
     tree_node *root = input_binary_tree_preorder();
     system("cls");
     
-    printf("Height of Tree : %d\n", height_recursive(root));
+    printf("Height of Tree (Recursive, Non-Recursive) : %d, %d\n", height_recursive(root), height_non_recursive(root));
     
     printf("Inorder Traversal : ");
     inorder(root);
@@ -429,6 +484,23 @@ int main() {
     printf("Right view : ");
     right_view(root);
     printf("\n");
+    
+    int n;
+    scanf("%d", &n);
+    printf("Ancestors of %d are : ", n);
+    print_all_ancestors(n, root);
+    printf("\n");
+
+    printf("Mirror Tree Level Order : ", n);
+    tree_node *temp = get_mirror(root);
+    level_order(temp);
+    printf("\n");
+    printf("Check if Mirror : %d", check_if_mirror(temp, root));
+    printf("\n");
+    temp -> right -> left -> data = 10;
+    printf("Check if Mirror : %d", check_if_mirror(temp, root));
+    printf("\n");
+
 
     printf("\ndone");
 }
