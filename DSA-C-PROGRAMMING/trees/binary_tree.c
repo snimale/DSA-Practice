@@ -283,8 +283,24 @@ int get_max_recursive(tree_node *root) {
     else return int_max(root -> data, int_max(get_max_recursive(root->left), get_max_recursive(root->right)));
 }
 
-void get_max_non_recursive() {
-
+int get_max_non_recursive(tree_node *root) {
+    node *stack = NULL;
+    tree_node *temp = root;
+    int max = -1;
+    while(temp!=NULL) {
+        push(&stack, temp);
+        if(max<temp->data) max = temp->data;
+        temp = temp->left;
+    }
+    while(isEmpty(&stack)==0) {
+        temp = pop(&stack);
+        temp = temp -> right;
+        while(temp!=NULL) {
+            push(&stack, temp);
+            if(max<temp->data) max = temp -> data;
+            temp = temp->left;
+        }
+    } return max;
 }
 
 int get_min_recursive(tree_node *root) {
@@ -293,8 +309,23 @@ int get_min_recursive(tree_node *root) {
     else return int_min(root -> data, int_min(get_min_recursive(root->left), get_min_recursive(root->right)));
 }
 
-void get_min_non_recursive() {
-
+int get_min_non_recursive(tree_node *root) {
+    node *stack = NULL;
+    tree_node *temp = root;
+    int min = 999999;
+    while(temp!=NULL) {
+        push(&stack, temp);
+        temp = temp->left;
+    }
+    while(isEmpty(&stack)==0) {
+        temp = pop(&stack);
+        if(min > temp->data) min = temp -> data;
+        temp = temp -> right;
+        while(temp!=NULL) {
+            push(&stack, temp);
+            temp = temp->left;
+        }
+    } return min;
 }
 
 int search_recursive(tree_node *root, int value) {
@@ -373,20 +404,64 @@ void max_sum_in_level() {
 
 }
 
-void print_all_paths_to_leaf() {
-    // print all paths from root to all leaf nodes in O(N)
+void print_all_paths_to_leaf(tree_node *root, int *arr, int height, int depth) {
+    if(root==NULL) return;
+    arr[depth] = root -> data;
+    if(root->left == NULL && root->right == NULL) {
+        printf("\n");
+        for(int i=0; i<height; i++) {
+            if(arr[i]!=-1) printf(" %d", arr[i]);
+        }
+    } else {
+        print_all_paths_to_leaf(root->left, arr, height, depth+1);
+        print_all_paths_to_leaf(root->right, arr, height, depth+1);
+    } arr[depth] = -1;
 }
 
-void have_path_with_sum() {
-    // check if any path has sum of ele = given sum, path from root to leaf obviously.
+int have_path_with_sum(tree_node *root, int current_sum, int target_sum) {
+    // check if any have_path_with_sum has sum of ele = given sum, path from root to leaf obviously.
+    if(root==NULL) return 0;
+    current_sum+=root->data;
+    if(root->left == NULL && root->right == NULL) {
+        if(current_sum == target_sum) return 1;
+        else return 0;
+    } else {
+        return have_path_with_sum(root->left, current_sum, target_sum) | have_path_with_sum(root->right, current_sum, target_sum);
+    } 
 }
 
-void sum_recursive() {
-
+int sum_recursive(tree_node *root) {
+    if(root==NULL) return 0;
+    return root->data + sum_recursive(root->left) + sum_recursive(root->right);
 }
 
-void sum_non_recursive() {
-
+int sum_non_recursive(tree_node *root) {
+    int sum=0;
+    node *stack = NULL;
+    tree_node *temp = root;
+    tree_node *prev = NULL;
+    while(temp!=NULL) {
+        push(&stack, temp);
+        temp = temp -> left;
+    }
+    while(isEmpty(&stack)==0) {
+        temp = peek(&stack);
+        if(temp -> right == NULL) {
+            sum += temp->data;
+            pop(&stack);
+            prev = temp;
+        } else if(temp -> right == prev) {
+            sum += temp->data;
+            pop(&stack);
+            prev = temp;
+        } else {
+            temp = temp -> right;
+            while(temp!=NULL) {
+                push(&stack, temp);
+                temp = temp->left;
+            }
+        }
+    } return sum;
 }
 
 tree_node *get_mirror(tree_node *root) {
@@ -501,6 +576,19 @@ int main() {
     printf("Check if Mirror : %d", check_if_mirror(temp, root));
     printf("\n");
 
-
+    printf("Max element in tree (recursive non-recursive) : %d %d", get_max_recursive(root), get_max_non_recursive(root));
+    printf("\nMin element in tree (recursive non-recursive) : %d %d", get_min_recursive(root), get_min_non_recursive(root));
+    printf("\nSum of all elements in tree (recursive non-recursive) : %d %d", sum_recursive(root), sum_non_recursive(root));
+    printf("\n");
+    printf("Print Path to all leaf nodes from root : ");
+    int height = height_recursive(root);
+    int *temp1= (int *)malloc(sizeof(int)*height);
+    for(int i=0; i<height; i++) temp1[i]=-1;
+    print_all_paths_to_leaf(root, temp1, height, 0);
+    printf("\n");
+    int target_sum=0;
+    scanf("%d", &target_sum);
+    have_path_with_sum(root, 0, target_sum)? printf("Have Path with sum %d", target_sum) : printf("Doesnt have path with sum %d", target_sum);
+    printf("\n");
     printf("\ndone");
 }

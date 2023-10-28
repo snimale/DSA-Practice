@@ -1,5 +1,4 @@
 binary tree :
-- height non recursive
-- print all ancestors
-- get mirror
-- check if mirror
+- max, min non recursive
+- sum recursive, non-recursive
+- print paths to leaf, has path with sum
