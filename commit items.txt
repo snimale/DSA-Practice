@@ -1,4 +1,6 @@
 binary tree :
-- max, min non recursive
-- sum recursive, non-recursive
-- print paths to leaf, has path with sum
+- size non-recursive
+- isometric check
+
+threaded binary search tree :
+- insertion, inorder non recursive

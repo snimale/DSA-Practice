@@ -352,8 +352,16 @@ int size_recursive(tree_node *root) {
     else return 1 + size_recursive(root->left) + size_recursive(root->right);
 }
 
-void size_non_recursive() {
-
+int size_non_recursive(tree_node *root) {
+    node *queue = NULL;
+    int size=0;
+    enqueue(&queue, root);
+    while(isEmpty(&queue)==0) {
+        tree_node *temp = dequeue(&queue);
+        size++;
+        if(temp->left != NULL) enqueue(&queue, temp->left);
+        if(temp->right != NULL) enqueue(&queue, temp->right);
+    } return size;
 }
 
 void reverse_level_order() {
@@ -392,8 +400,10 @@ void half_node_count_non_recursive() {
 
 }
 
-void have_same_structure(/*given two trees*/) {
-
+int have_same_structure(tree_node *root1, tree_node *root2) {
+    if(root1==NULL && root2==NULL) return 1;
+    else if(root1!=NULL && root2!=NULL) return have_same_structure(root1->left, root2->left) & have_same_structure(root1->right, root2->right);
+    else return 0;
 }
 
 void diameter() {
@@ -579,6 +589,7 @@ int main() {
     printf("Max element in tree (recursive non-recursive) : %d %d", get_max_recursive(root), get_max_non_recursive(root));
     printf("\nMin element in tree (recursive non-recursive) : %d %d", get_min_recursive(root), get_min_non_recursive(root));
     printf("\nSum of all elements in tree (recursive non-recursive) : %d %d", sum_recursive(root), sum_non_recursive(root));
+    printf("\nSize of Tree (recursive non-recursive) : %d %d", size_recursive(root), size_non_recursive(root));
     printf("\n");
     printf("Print Path to all leaf nodes from root : ");
     int height = height_recursive(root);
@@ -590,5 +601,8 @@ int main() {
     scanf("%d", &target_sum);
     have_path_with_sum(root, 0, target_sum)? printf("Have Path with sum %d", target_sum) : printf("Doesnt have path with sum %d", target_sum);
     printf("\n");
+    
+    tree_node *root_copy = root;
+    printf("Have Same Stucture? (root-mirrot), (root, root_copy) : %d, %d", have_same_structure(root, get_mirror(root)), have_same_structure(root, root_copy));
     printf("\ndone");
 }
