@@ -1,6 +1,6 @@
-binary tree :
-- size non-recursive
-- isometric check
+binary search tree:
+-insertion
+-deletion
 
-threaded binary search tree :
-- insertion, inorder non recursive
+TBST:
+-preorder

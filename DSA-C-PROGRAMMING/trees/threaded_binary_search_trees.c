@@ -80,6 +80,43 @@ void inorder_TBT(TBST_Node *head) {
     }
 }
 
+void preorder_TBT(TBST_Node *head) {
+    if(head->leftIsThread==1) return;
+    else {
+        TBST_Node *root=head->left;
+        printf("\nPREORDER TBT TRAVERSAL : ");
+        while(root->leftIsThread==0) {
+            printf(" %d", root->data);
+            root=root->left;
+        } printf(" %d", root->data);
+        while(root!=head) {
+            if(root->rightIsThread==1) {
+                while(root->rightIsThread==1 && root!=head) {
+                    root=root->right;
+                }
+            } else {
+                root=root->right;
+                while(root->leftIsThread==0) {
+                    printf(" %d", root->data);
+                    root=root->left;
+                } printf(" %d", root->data);
+            }
+        }
+    }
+}
+
+void util_postorder_TBT(TBST_Node *root) {
+    if(root->leftIsThread==0) util_postorder_TBT(root->left);
+    if(root->rightIsThread==0) util_postorder_TBT(root->right);
+    printf(" %d", root->data);
+}
+
+void postorder_TBT(TBST_Node *head) {
+    printf("\nPOSTORDER TBT TRAVERSAL : ");
+    if(head -> leftIsThread == 1) return;
+    util_postorder_TBT(head->left);
+}
+
 int main() {
     TBST_Node *head = (TBST_Node *)malloc(sizeof(TBST_Node));
     head -> data = -1;
@@ -99,4 +136,6 @@ int main() {
     }
 
     inorder_TBT(head);
+    preorder_TBT(head);
+    postorder_TBT(head);
 }
