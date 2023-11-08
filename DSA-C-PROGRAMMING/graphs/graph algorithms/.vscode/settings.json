@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "DIJKSTRAS.C": "cpp",
+        "stdlib.h": "c",
+        "stdio.h": "c"
+    }
+}
